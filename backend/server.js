@@ -3,7 +3,12 @@ const http = require("http");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./db");
+
+// ROUTE FILES
 const authRoutes = require("./authRoutes");
+const doctorRoutes = require("./doctorRoutes");
+const appointmentRoutes = require("./appointmentRoutes");
+const reviewRoutes = require("./reviewRoutes");
 
 dotenv.config();
 connectDB();
@@ -11,14 +16,17 @@ connectDB();
 const app = express();
 const server = http.createServer(app);
 
-// 🔥 VERY IMPORTANT (BODY PARSER)
+// MIDDLEWARES
 app.use(cors());
-app.use(express.json()); // ⬅️ THIS WAS THE MAIN ISSUE
+app.use(express.json());
 
-// Routes
+// ROUTES
 app.use("/api/auth", authRoutes);
+app.use("/api/doctors", doctorRoutes);
+app.use("/api/appointments", appointmentRoutes);
+app.use("/api/reviews", reviewRoutes);
 
-// test route (debug)
+// TEST ROUTE
 app.get("/test", (req, res) => {
   res.send("Backend working");
 });
